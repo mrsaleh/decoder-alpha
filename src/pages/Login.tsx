@@ -18,7 +18,8 @@ import { Grid } from '@material-ui/core';
 import {logoDiscord, logoTwitter,logoYoutube} from "ionicons/icons";
 import usePersistentState from '../hooks/usePersistentState';
 import meLogo from '../images/me.png';
-
+import { IonButton, IonCard, IonCardContent, createAnimation } from '@ionic/react';
+import type { Animation } from '@ionic/react';
 /**
  * The "Login" page to which all unauthenticated users are redirected to
  *
@@ -26,6 +27,20 @@ import meLogo from '../images/me.png';
  */
 
 function Login() {
+
+const animation = useRef<Animation | null>(null);
+
+  useEffect(() => {
+    if (animation.current === null) {
+      animation.current = createAnimation()
+        .addElement(cardEl.current!)
+        .duration(1200)
+        .iterations(Infinity)
+        .fromTo('transform', 'translateX(0px)', 'translateX(110px)')
+        .fromTo('opacity', '1', '0.3');
+    }
+  }, []);
+
     const history = useHistory()
 	const dispatch = useDispatch();
     const user = useUser();
